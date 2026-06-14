@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Eliott Cariou · BUT GMP · UPHF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#111110;--ink2:#444441;--ink3:#888780;
+  --paper:#FAFAF8;--surface:#F1EFE8;--border:#E2E0D8;
+  --accent:#1D9E75;--accent2:#185FA5;--accent-light:#E1F5EE;
+  --r:10px;--rl:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;min-height:100vh}
+.layout{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:236px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-logo{padding:1.25rem 1.1rem .875rem;border-bottom:1px solid var(--border)}
+.sidebar-logo .name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--ink);line-height:1.2}
+.sidebar-logo .sub{font-size:10px;color:var(--ink3);margin-top:3px;letter-spacing:.03em}
+.dot{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-right:6px;flex-shrink:0}
+nav{flex:1;padding:.5rem 0}
+.ng-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink3);padding:8px 1.1rem 3px}
+.nl{display:block;padding:5px 1.1rem;font-size:12.5px;color:var(--ink2);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .12s;border-radius:0}
+.nl:hover{background:var(--surface);color:var(--ink)}
+.nl.active{background:var(--accent-light);color:#085041;font-weight:500}
+.nl.sub{padding-left:1.9rem;font-size:12px;color:var(--ink3)}
+.nl.sub:hover,.nl.sub.active{color:#085041}
+.sf{padding:.875rem 1.1rem;border-top:1px solid var(--border);font-size:10.5px;color:var(--ink3);line-height:1.6}
+
+/* MAIN */
+.main{flex:1;padding:2.25rem 2.5rem;max-width:820px}
+.page{display:none}
+.page.on{display:block}
+
+/* HERO */
+.hero-home{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:2.5rem 2.25rem;margin-bottom:1.75rem}
+.eyebrow{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.875rem}
+.hero-title{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.05;margin-bottom:.875rem}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-desc{font-size:14px;color:var(--ink2);max-width:500px;line-height:1.75;margin-bottom:1.5rem}
+.skills{display:flex;flex-wrap:wrap;gap:7px}
+.skill{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:4px 13px;font-size:11.5px;color:var(--ink2);font-weight:500}
+.skill.hl{background:var(--accent-light);color:#085041;border-color:#9FE1CB}
+
+/* PAGE HEADER */
+.page-title{font-family:'DM Serif Display',serif;font-size:30px;color:var(--ink);margin-bottom:.375rem}
+.page-sub{font-size:13px;color:var(--ink3);margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.bc{font-size:11.5px;color:var(--ink3);margin-bottom:1.25rem;display:flex;align-items:center;gap:5px}
+.bc span{color:var(--ink2)}
+
+/* CARDS */
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:11px;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:1.1rem;cursor:pointer;transition:border-color .15s}
+.card:hover{border-color:#aaa}
+.card-ico{font-size:26px;margin-bottom:8px}
+.card-badge{display:inline-block;background:var(--accent-light);color:#085041;font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;margin-bottom:7px;text-transform:uppercase;letter-spacing:.04em}
+.card-title{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.card-desc{font-size:12px;color:var(--ink3);line-height:1.5}
+
+/* CONTENT */
+.cb{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:1.5rem 1.75rem;margin-bottom:1.1rem}
+.cb h2{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:.625rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.cb h3{font-size:13.5px;font-weight:600;color:var(--accent2);margin-bottom:.4rem;margin-top:.875rem}
+.cb p{font-size:13.5px;color:var(--ink2);line-height:1.75;margin-bottom:.625rem}
+.cb p:last-child{margin-bottom:0}
+.cb ul{margin:.4rem 0 .625rem 1.2rem}
+.cb ul li{font-size:13.5px;color:var(--ink2);line-height:1.7;margin-bottom:3px}
+
+/* PHOTO */
+.photo-wrap{margin-bottom:1.1rem}
+.photo-grid{display:grid;gap:10px;margin-bottom:1.1rem}
+.photo-grid.cols2{grid-template-columns:1fr 1fr}
+.photo-grid.cols3{grid-template-columns:1fr 1fr 1fr}
+.photo-grid.cols1{grid-template-columns:1fr}
+.photo-wrap img,.photo-grid img{width:100%;border-radius:var(--r);border:1px solid var(--border);display:block;object-fit:cover;max-height:340px}
+.photo-cap{font-size:11px;color:var(--ink3);text-align:center;margin-top:5px;font-style:italic}
+
+/* PROJ CARD */
+.proj{background:#fff;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:1rem}
+.proj-body{padding:1.1rem 1.4rem}
+.ptag{display:inline-block;background:var(--surface);border-radius:var(--r);padding:2px 9px;font-size:10.5px;color:var(--ink3);font-weight:500;margin-bottom:7px}
+.ptitle{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.ppb{font-size:12.5px;color:var(--ink3);margin-bottom:3px}
+.ppb strong{color:var(--accent2)}
+.psol{font-size:13px;color:var(--ink2);line-height:1.65}
+
+/* STATS */
+.sr{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:9px;margin-bottom:1.1rem}
+.stat{background:var(--surface);border-radius:var(--r);padding:.75rem;text-align:center}
+.stat-v{font-size:20px;font-weight:600;color:var(--ink)}
+.stat-l{font-size:10.5px;color:var(--ink3);margin-top:2px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:.875rem}
+.tbl th{background:var(--surface);padding:7px 11px;text-align:left;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);border:1px solid var(--border)}
+.tbl td{padding:7px 11px;border:1px solid var(--border);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAFAF8}
+.tbl td:first-child{font-weight:500;color:var(--ink2);white-space:nowrap}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:9px;margin-bottom:1.1rem}
+.step{display:flex;gap:13px;background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;align-items:flex-start}
+.sn{width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.sn.g{background:var(--accent-light);color:#085041}
+.sn.b{background:#E6F1FB;color:#0C447C}
+.sn.a{background:#FAEEDA;color:#633806}
+.step-title{font-size:13.5px;font-weight:600;margin-bottom:3px;color:var(--ink)}
+.step-desc{font-size:12.5px;color:var(--ink3);line-height:1.6}
+
+/* SCORE */
+.score-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:1.1rem}
+.score-box{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:1rem;text-align:center}
+.score-n{font-family:'DM Serif Display',serif;font-size:36px;line-height:1}
+.score-l{font-size:11px;color:var(--ink3);margin-top:3px}
+
+/* TRACK */
+.track-item{display:flex;gap:11px;padding:.875rem 1.25rem;border-bottom:1px solid var(--border);align-items:flex-start}
+.track-item:last-child{border-bottom:none}
+.track-ico{width:32px;height:32px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tg{background:#E1F5EE}.tb{background:#E6F1FB}.ta{background:#FAEEDA}
+.track-name{font-size:13.5px;font-weight:600;margin-bottom:2px}
+.track-desc{font-size:12px;color:var(--ink3);line-height:1.55}
+
+@media(max-width:680px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:relative}
+  .main{padding:1.25rem .875rem}
+  .hero-title{font-size:30px}
+  .score-row,.photo-grid.cols2,.photo-grid.cols3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="name"><span class="dot"></span>Eliott Cariou</div>
+    <div class="sub">BUT GMP FA · UPHF · 2025–2026</div>
+  </div>
+  <nav>
+    <button class="nl active" onclick="go('accueil',this)">🏠 Accueil</button>
+    <div class="ng-title">Alternance</div>
+    <button class="nl sub" onclick="go('comrod',this)">Présentation Comrod</button>
+    <div class="ng-title">Mes projets</div>
+    <button class="nl sub" onclick="go('douille',this)">Douille mollette</button>
+    <button class="nl sub" onclick="go('bati',this)">Bâti test</button>
+    <button class="nl sub" onclick="go('porteoutils',this)">Porte outils</button>
+    <button class="nl sub" onclick="go('plaque',this)">Plaque support mat</button>
+    <button class="nl sub" onclick="go('gonogo',this)">Go / No-go</button>
+    <button class="nl sub" onclick="go('outillage',this)">Outillage patin</button>
+    <button class="nl sub" onclick="go('haubanage',this)">Cartérisation haubanage</button>
+    <div class="ng-title">Compétences</div>
+    <button class="nl sub" onclick="go('sae11',this)">SAE 1.1 — Spécifier</button>
+    <button class="nl sub" onclick="go('tpsdm',this)">TP SDM</button>
+    <button class="nl sub" onclick="go('sae13',this)">SAE 1.3</button>
+    <button class="nl sub" onclick="go('sae23',this)">SAE 2.3 — Développer</button>
+    <button class="nl sub" onclick="go('sae21',this)">SAE 2.1</button>
+    <button class="nl sub" onclick="go('realiser',this)">Réaliser</button>
+    <button class="nl sub" onclick="go('c4',this)">C4 — Exploiter</button>
+    <div class="ng-title">SAÉ Monster Truck</div>
+    <button class="nl sub" onclick="go('mt-pres',this)">Présentation</button>
+    <button class="nl sub" onclick="go('mt-conce',this)">Conception</button>
+    <button class="nl sub" onclick="go('mt-fab',this)">Fabrication</button>
+    <button class="nl sub" onclick="go('mt-course',this)">La course</button>
+  </nav>
+  <div class="sf">eliott.cariou@gmail.com<br>07 69 33 69 32</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ACCUEIL -->
+<div id="accueil" class="page on">
+  <div class="hero-home">
+    <div class="eyebrow">Portfolio BUT GMP FA — 2025–2026</div>
+    <div class="hero-title">Eliott<br><em>Cariou</em></div>
+    <p class="hero-desc">Étudiant en 2ème année de BUT Génie Mécanique et Productique, parcours CAI, en alternance au sein du département Méthodes de Comrod France à Saint-Amand-les-Eaux. Ce portfolio présente mes projets, compétences et réalisations tout au long de ma formation.</p>
+    <div class="skills">
+      <span class="skill hl">SolidWorks</span><span class="skill hl">CATIA</span><span class="skill hl">Fusion 360</span>
+      <span class="skill">Conception outillage</span><span class="skill">Gestion de projet</span>
+      <span class="skill">Méthodes industrielles</span><span class="skill">Impression 3D</span>
+    </div>
+  </div>
+  <div class="cg">
+    <div class="card" onclick="go('comrod',null)"><div class="card-ico">🏭</div><div class="card-badge">Alternance</div><div class="card-title">Comrod France</div><div class="card-desc">Département Méthodes — Saint-Amand-les-Eaux</div></div>
+    <div class="card" onclick="go('douille',null)"><div class="card-ico">🔧</div><div class="card-badge">Projets</div><div class="card-title">7 projets d'outillage</div><div class="card-desc">Douille, bâti test, go/no-go, haubanage…</div></div>
+    <div class="card" onclick="go('mt-pres',null)"><div class="card-ico">🚛</div><div class="card-badge">SAÉ BUT2</div><div class="card-title">Monster Truck</div><div class="card-desc">Conception, fabrication et course — FA2CAI3</div></div>
+    <div class="card" onclick="go('sae11',null)"><div class="card-ico">📐</div><div class="card-badge">Compétences</div><div class="card-title">Spécifier · Développer · Réaliser</div><div class="card-desc">SAE 1.1, 1.3, 2.1, 2.3, TP SDM</div></div>
+  </div>
+</div>
+
+<!-- COMROD -->
+<div id="comrod" class="page">
+  <div class="bc">Accueil <span>›</span> <span>Présentation Comrod</span></div>
+  <div class="page-title">Comrod France</div>
+  <div class="page-sub">Mon entreprise d'alternance — Département Méthodes</div>
+  <div class="photo-grid cols3">
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBqkj7_bs7LpoVi2UWBMoy-npBdVs3hYi7xBlO9I0VfklWlpls9WIZi0sxiQphR1y_aAyKsQ21oxjva2LkgPcRKx4kqynulMww3aWkisHxDhkSL98A6C_Q80Yf0BH5iKTqD6YaMI_uZMv2Zg4zQXwgb_AbpallbKAKaMdZmlyjo3xTo8uRTOCoRWSTw8_gd_AuwQ1k5oiluseRPcLQ4kleEkJtQWBBGRY9f9eI=w1280" alt="Comrod France"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBIV2bbj8aqj1QDSs_mgjx6ZOJ8Ldumen0-MsIT_d5k_wueO65QrPbUXF2EgnmAJWHTdAUrnTUVNmdQ5siLf8iPQt2SNAUVIt3mHg1eQ-VqSXbM46no4JIktf0trFow4VmQilurWYpsiGTnS8og3wGI85I1HxZwmSOtGM1fa0Fb0Shm2gm8VyrAUbJNybCp7QyZbGwWIzuZkse1LhjZBxrDntBv8qIFwjTHtWs=w1280" alt="Comrod produits"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUAVrM3ubGbtte60ole1TPk7iQ50c1ogV6sSnmJsShUiue6dk_SPkw74vbLazyl7GOOLhG7OykSL19FQ11dpGOUEVhEW8_4EGgN1YB-rqRZqyuQwJMVNFxkxq-1KKv4OS9UGrQaoZ0V2vS6n1AfCAXPIYDTNN8BeBoW2u5qshtp5f6q2xvzteijrIbnmfeijpzzSntURrY7TrEr9N8xXhjAHsP19Zd9F-Efs=w1280" alt="Comrod antennes"></div>
+  </div>
+  <div class="cb">
+    <h2>Histoire et activité</h2>
+    <p>Fondée en 1946, Comrod France est spécialisée dans les équipements de communication — notamment la conception et la fabrication d'antennes et de systèmes pour les secteurs militaire et civil. Basée à Saint-Amand-les-Eaux, elle regroupe environ une centaine de collaborateurs.</p>
+    <p>Comrod développe des systèmes complets de communication, des outils de surveillance et de contrôle, ainsi que des services de conseil en ingénierie. La société se distingue par une forte culture qualité et une volonté constante d'innovation.</p>
+  </div>
+  <div class="cb">
+    <h2>Mon rôle — Département Méthodes</h2>
+    <p>Au sein du département Méthodes, je participe à la conception d'outillages sur SolidWorks, à la rédaction de gammes de fabrication et au suivi de la production. Mes 7 projets couvrent la conception de douilles, bâtis de test, gabarits go/no-go et outillages spécifiques pour les mâts de communication.</p>
+  </div>
+  <div class="sr">
+    <div class="stat"><div class="stat-v">~100</div><div class="stat-l">Collaborateurs</div></div>
+    <div class="stat"><div class="stat-v">1946</div><div class="stat-l">Fondation</div></div>
+    <div class="stat"><div class="stat-v">7</div><div class="stat-l">Projets réalisés</div></div>
+  </div>
+</div>
+
+<!-- DOUILLE -->
+<div id="douille" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Douille mollette</span></div>
+  <div class="page-title">Douille mollette</div>
+  <div class="page-sub">Outillage de serrage au couple — Comrod France</div>
+  <div class="photo-grid cols2">
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBmVuo39-Nw9quTtW1CSUrRTqYEXlYqyaMD0n1NjXtfTdODe_cTgLrgFLUO7OH9ReSX8cAcAfhMKYHw7-2StSvJVCEMn9RMQL51mj5yQHAguLDCyof8jdLX0OHzkWvbepZariYXoIUF5ZwdzadR30wwoWdhUGEGxQ7YcjW-mE_c5iih3BZJKLc7482vMbGvIMtuOtMPazbKMPEqIvIhud4X1FQLR9we14kCVlf6Av0=w1280" alt="Douille mollette CAO"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDf26vJGKcuRw_h4lPGk_Ryx0j3LIcpXnjf_ZuaNx714F_cmUktHO-r0cpYM3_SiIIgAhG5qREEeL2GLy5P0Rw7W3L0rD88JKWeTzn0PFJYgNpBFiHtKc-rBMouU34na7ErT8vdH7fUSAkL_UXSVIb_J7D_ZV53RVpQZw4b0ilRVgwXztwcmgB8w_L1MNO9LC_SYXdUZUw9QUCW6dhkXqD0jEOJ3-14n_O8hM_A=w1280" alt="Douille mollette plan"></div>
+  </div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDdNeYr1z_e1q_DR437Lf6bfsWQAQVRZ10MuOgQSZaxRDjw-k0cjXexWNyvjE4Sv45mxv4yRLvBeTf8veH5T-mo-8HWCqPaKb9coJ0K2KKgUw_qm3CRi8ezeOir4ThWX2YPQ1MGHStDg8xznCL7t7z3zkW3Bs8h7H00BhX_ynoHca1T863VA1KPj-6WMcRkKnfUOjtr2cTdXwz_pk8vTcsb0sIQEgBOwK9pChNk9Jo=w1280" alt="Douille mollette réalisée">
+    <p class="photo-cap">Douille réalisée en aluminium — usinée par prestataire extérieur</p>
+  </div>
+  <div class="cb">
+    <h2>Problème identifié</h2>
+    <p>Des molettes devaient être serrées au couple lors du montage des mâts de communication. Sans outillage adapté, il était impossible de contrôler précisément le couple de serrage, risquant d'endommager les composants ou de provoquer un mauvais assemblage.</p>
+    <h2>Solution conçue</h2>
+    <p>J'ai conçu une douille réglable avec un système de vis qui bloque la rotation de la molette, permettant de la serrer au couple avec une clé dynamométrique standard. La douille est réalisée en aluminium et usinée par un prestataire extérieur à partir des plans SolidWorks.</p>
+    <ul>
+      <li>Matériau : aluminium usiné par prestataire</li>
+      <li>Blocage par vis de la rotation de la molette</li>
+      <li>Compatible clé dynamométrique standard</li>
+      <li>Conception CAO SolidWorks</li>
+    </ul>
+  </div>
+</div>
+
+<!-- BATI TEST -->
+<div id="bati" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Bâti test</span></div>
+  <div class="page-title">Bâti test</div>
+  <div class="page-sub">Outillage de contrôle des composants mât — Comrod France</div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUAs5sSWM5LOTQ8ssW9rJ1mSE_Y8XUgKPY_52t--dAlVOxbc0YGSLHjq8Lxsn6fY73KfxdqxmuKJceg3E4eJaMns7MWrTmL67rZZIN6qc7zYsggEyZFZWWV_-3USXC7pEJveqGbBt3WlFVy1KhLcp36w254Pe4bISDpIfymvRDYh8tr0V9Gh0Ww_2C930ykbV55RvNkEE3rwsZbmCiXiHrisjqs6SvmaYKQHF7AwntE=w1280" alt="Bâti test">
+    <p class="photo-cap">Bâti test conçu et fabriqué en interne</p>
+  </div>
+  <div class="cb">
+    <h2>Problème identifié</h2>
+    <p>Pour vérifier chaque composant d'un mât avant son montage définitif, il était nécessaire de pouvoir les contrôler un par un dans des conditions représentatives des conditions réelles d'installation.</p>
+    <h2>Solution conçue</h2>
+    <p>Un bâti de test reprenant les attaches du mât pour permettre de fixer les éléments à tester. Mobile et déplaçable, il permet de tester un élément à la fois. La fabrication a été réalisée en interne : j'ai découpé chaque profilé et participé à l'assemblage.</p>
+    <ul>
+      <li>Reprend les points d'attache du mât réel</li>
+      <li>Structure mobile et déplaçable</li>
+      <li>Test unitaire de chaque composant</li>
+      <li>Fabrication interne — découpe de profilés</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PORTE OUTILS -->
+<div id="porteoutils" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Porte outils</span></div>
+  <div class="page-title">Porte outils</div>
+  <div class="page-sub">Rangement bagues laiton — Enroulement filamentaire · Comrod France</div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUC1WXjH_5Zr0L85T5Hc63IuBFT9pzONOZ8LQYa7hsmeY_8JWGexPpu9ZgAzNg4hJYM2j9h530tOKR1XqO57d_BmRK4LoZ7wxFOH_RW8gG7ksYlPo36v2eHX6UNmlyr-dhsKgt_ZV64INSYlAXgMRmpTX__Qsnhu6C0xdKIbpR-w7hQMCHGGTzLJletpGRVa9YFYRWmv3ZqyVjfIspXenKXUsCj6tiRattD9=w1280" alt="Porte outils">
+    <p class="photo-cap">Structure en profilés avec plaques perforées et crochets</p>
+  </div>
+  <div class="cb">
+    <h2>Problème identifié</h2>
+    <p>Cette tâche m'a été confiée au début de mon alternance par les opérateurs de l'enroulement filamentaire. Ils avaient besoin d'un porte-outils pour poser leurs bagues en laiton car ils les posaient à l'origine sur un établi — il fallait trouver un moyen plus pratique de les ranger.</p>
+    <h2>Solution conçue</h2>
+    <p>Une structure en profilés avec deux plaques perforées sur lesquelles on peut fixer des crochets ou des boîtes, permettant de mieux placer les bagues. La structure n'a pas été réalisée en CAO car je débutais mon alternance — elle a été conçue sur papier, puis j'ai découpé chaque profilé pour la fabriquer en interne.</p>
+  </div>
+</div>
+
+<!-- PLAQUE SUPPORT MAT -->
+<div id="plaque" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Plaque support mat</span></div>
+  <div class="page-title">Plaque support mat</div>
+  <div class="page-sub">Table de manipulation des mâts — Comrod France</div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBXHdGBRGsIyBd8Ogi7GU6S2Y92KJZrrcRwAMZHLb6XREfWQuxPVFSviiZ3aViRoycqS8fo59OIGq97_9-SVcMJ7U8rBqzt4OV8NiRkKw6HeYKQPS5R16z-GDIonKKTDDyWT-CPZn0LwyFC7Av2B3O1Wpn8Uv4LwQtK4rNodkvbEFYO0H0pTfQCoQpoUprOiH6vIWh8aaYSybjfxHahDV_HcgmW8hfZ2HI3=w1280" alt="Plaque support mat">
+    <p class="photo-cap">Plaque acier perforée sur table roulante à vérin</p>
+  </div>
+  <div class="cb">
+    <h2>Problème identifié</h2>
+    <p>Pour mieux manipuler les mâts lors du câblage et du montage, il était nécessaire de pouvoir les fixer dans une position pratique et accessible.</p>
+    <h2>Solution conçue</h2>
+    <p>Dans les ateliers, il existait déjà des plaques en acier percées aux dimensions des fixations des mâts. J'ai modélisé la plaque sur SolidWorks, qui a ensuite été envoyée chez un prestataire extérieur pour fabrication. J'ai également commandé les deux tables roulantes à vérin chez un fournisseur.</p>
+    <ul>
+      <li>Modélisation SolidWorks</li>
+      <li>Fabrication externalisée sur plan</li>
+      <li>Tables roulantes à vérin commandées fournisseur</li>
+    </ul>
+  </div>
+</div>
+
+<!-- GONOGO -->
+<div id="gonogo" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Go / No-go</span></div>
+  <div class="page-title">Go / No-go</div>
+  <div class="page-sub">Gabarit de contrôle usiné — Comrod France</div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUA3r9SY1A2pI8HhYL-SzGH9YkQrXhmwYXEwGIJYG477jRK0z4vP6sIW2ZGYggLYNPUhhWpfdxj0KcEY0aPGUgyVJ-EbGgkv0bVgA3W73Y7kBhxcyiArHz1juF5DC0OUgAnfU7ZqF4kx0rf0EdDglJpMGWTWoWk9HD6BnmUJIhNIk4Q1JYFLvQlPt4EGkeBdNU0MJnxGEw8iEr-JS02yM-5zjveMEW3yyUdr=w1280" alt="Go No-Go gabarit">
+    <p class="photo-cap">Gabarit de contrôle reprenant la forme intérieure du tube hexagonal</p>
+  </div>
+  <div class="cb">
+    <h2>Problème identifié</h2>
+    <p>Nous avons une gamme de mâts composée de poutres en aluminium usinées en interne grâce à un robot. Des non-conformités ont été constatées sur certains usinages — il fallait un moyen de les détecter rapidement en production.</p>
+    <h2>Solution conçue</h2>
+    <p>J'ai repris la forme intérieure du tube hexagonal du mât et j'ai ajouté des oreilles pour s'encocher dans les encoches usinées par le robot dans le tube. J'ai dû créer plusieurs versions pour chaque taille de tube de la gamme.</p>
+    <ul>
+      <li>Reprend la géométrie intérieure du tube hexagonal</li>
+      <li>Oreilles d'encochage pour contrôle des usinages robot</li>
+      <li>Plusieurs versions pour chaque diamètre de tube</li>
+      <li>Contrôle rapide sans instrument de mesure</li>
+    </ul>
+  </div>
+</div>
+
+<!-- OUTILLAGE PATIN -->
+<div id="outillage" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Outillage patin</span></div>
+  <div class="page-title">Outillage patin</div>
+  <div class="page-sub">Outillage de collage — Service R&D · Comrod France</div>
+  <div class="photo-grid cols2">
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBE4Tel7X9UqzerI6rFHneF3nRsXChvKovaGrBSCjPLo019J-_RnruyzSZAX2jAAwfse0MFyL5938pH02JX9B5SgwxMNa-r4Gz39n9YNPwPvQSCz6XqCML461NAQmcMWclNQr-9LZft24Lo0_yKbjFoYKmSjqDrne8-N9LqZvCen8qbCp0E0JsjrrrWsbTpVOIkrXccJNwIw0t8rN5r2KRGZcSr9j-bJFGZVBE=w1280" alt="Outillage patin support"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDbvElxGWkoQvXL5U6BQ1AS8PJNbyvqlFYoUdpjFA7IxYTTnghK43GydhwOsnRo_GFO2lnfogHlUX-9GW2oC6L1-F38qeg1gMZmBHhNiUBmC9UcGXnR6mPGXwlwfl1Ot7SbYU75Hp0vR3JEaJXuDYoU6ban-6bY_tn9PQy0G4zOQiOFU_pg6KiS_IHEnUOYXJy8qgguJtwPoxWze9qaobayZiJnLpNFl9wFxSU=w1280" alt="Outillage patin intérieur"></div>
+  </div>
+  <div class="cb">
+    <h2>Problème identifié</h2>
+    <p>Pour les mâts composites, des patins permettent le coulissement des poutres les unes dans les autres. Ces patins sont collés sur des pièces en aluminium, mais le process est long et pénible : sablage, dégraissage, application de colle difficile. Le service R&D m'a demandé de réaliser des outillages pour faire des essais et voir s'il était possible d'améliorer cette technologie.</p>
+    <h2>Solution conçue</h2>
+    <p>J'ai modélisé les outillages sur SolidWorks. Il a également fallu créer un outillage qui se place à l'intérieur du support pour coincer le patin le temps du séchage et éviter qu'il ne se déforme.</p>
+    <ul>
+      <li>Outillage de maintien pendant le collage</li>
+      <li>Outillage intérieur anti-déformation au séchage</li>
+      <li>Modélisation SolidWorks</li>
+      <li>Essais R&D pour amélioration du process</li>
+    </ul>
+  </div>
+</div>
+
+<!-- HAUBANAGE -->
+<div id="haubanage" class="page">
+  <div class="bc">Accueil <span>›</span> Mes projets <span>›</span> <span>Cartérisation haubanage</span></div>
+  <div class="page-title">Cartérisation haubanage</div>
+  <div class="page-sub">Machine d'enroulement automatisée — Comrod France</div>
+  <div class="cb">
+    <h2>Contexte</h2>
+    <p>Ce projet concerne la cartérisation d'une machine de haubanage automatisée. La machine d'enroulement de haubans a évolué d'un mode semi-automatique vers un fonctionnement entièrement automatisé sous contrôle Arduino. La cartérisation vise à protéger les opérateurs et les composants de la machine tout en facilitant la maintenance.</p>
+    <h2>Projet principal de l'alternance</h2>
+    <p>Ce projet constitue le fil conducteur de mon rapport de fin d'alternance. Il illustre la progression de la machine depuis la commande manuelle jusqu'à l'automatisation complète par Arduino, en passant par la conception des protections mécaniques.</p>
+  </div>
+</div>
+
+<!-- SAE 1.1 -->
+<div id="sae11" class="page">
+  <div class="bc">Accueil <span>›</span> Spécifier <span>›</span> <span>SAE 1.1</span></div>
+  <div class="page-title">SAE 1.1 — Spécifier</div>
+  <div class="page-sub">Analyse de systèmes techniques</div>
+  <div class="photo-grid cols2">
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBv-NYJ8tv0VhuGpn6fQYwLFhid7ez3aFzeLw1Oe6O5d3TnyD9qcaoz4jKusC5Xa_yYKKHEbSSY_J0zObm57r2Pq9xYmvRTeClYAZJezI8_w-z9G8WBA0muFCaFTiKIgiE0EU-eCYnzxLqtsoSu49Fsz63omZws_kOonqfxGUWTPxkjiyZenEqZNhGwbnFapFbko2tdaEhgv_39oUwleiJVrhYlbEf0SMUneNDK=w1280" alt="SAE 1.1 portail"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUABCo-ysaBy6vas4Oi5C-ZzOSWMyPmaeGMGNQ7BX3GTnKVNDmCAF0X74zjS0ARqoV0AKggucpHeAs_2sDpaebXsMuoaatOcNOJtlomtSeynvtXRso57O6d1889OQldX-NI82hPEeMQatZLy7wb-I4V7d_xmplWOGJbyHC2Ru7akxo2rS9MqZOWMejBZS0S9ypJJOGvc0-SJktLHwTBF40VHBb3BeMh0Fv17xwmLH28=w1280" alt="SAE 1.1 schéma"></div>
+  </div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDs40lD_QpkAGqKf9Xq5BRdWtkodj4NZIBfNRpwv2iC6qGfQ8MM9FM8_hc9vF0g-dvXi-8-dPdE4TOy3JCrXtlZnYgEG6--6OTAdimlJU08AavZ_YPxgGFPdimJ2Auu0ddGG00hSYtMuE-YnO1V0XlUgfFXcVOepy2_dnCEj0zJ0QMOs8tq3Qh_GBW1R674aSPEa4zeeOcY_Paoc4Soyo17Vxymjw5iz4YcHRRfw40=w1280" alt="SAE 1.1 motorisation">
+    <p class="photo-cap">Système de motorisation pour portail battant analysé</p>
+  </div>
+  <div class="cb">
+    <h2>Présentation</h2>
+    <p>Dans cette SAE, j'ai analysé deux systèmes techniques : un système de motorisation pour portail battant et un équipement de communication. Cette analyse m'a permis de développer mes compétences en lecture de documentation technique et en interprétation de schémas cinématiques.</p>
+    <h3>Analyse technique des équipements</h3>
+    <ul>
+      <li>Étude des fiches techniques — alimentation, dimensions, portée, poids</li>
+      <li>Identification des fonctions principales : communication, ouverture automatique, sécurité</li>
+      <li>Observation et interprétation des schémas cinématiques et de transmission de puissance</li>
+      <li>Compréhension des liaisons entre éléments : moteur, bras, articulations</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TP SDM -->
+<div id="tpsdm" class="page">
+  <div class="bc">Accueil <span>›</span> Spécifier <span>›</span> <span>TP SDM</span></div>
+  <div class="page-title">TP SDM</div>
+  <div class="page-sub">Essais sur matériaux — Résilience, dureté, traction</div>
+  <div class="photo-grid cols2">
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDbJ8oKq4pvUy4bdHyB0UykBm_p-aAAz9h7evC2fyGp9gcxjL7Xy4Uome4_74ms7SPmP0IGMgTk0MahsMyy3NOCxEMjyy-VE9q0tWDEDn2lUjtakccGJiUz5DhYMyDa3RXzprckOTD7Ps0NdadfA-mCtmXawDytcbByvAztF6dph212M0-G2RtWKENVgi3hW3q5kr03VZqWYyP3pQ1qJpLxcrbXbeEcO5lDK0CdYcE=w1280" alt="Essai résilience"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDZEMSB4Vl5bTZZjLkKPGmC85lRuLrWqizcM57hHjZQzNkBzAglq5TXHRjZX_Nd4CLKknbpNLOM-Oyj2EJHJ_9ZZP1jh60D2WQFt6Y11dgMv5bhRVko9BLZfpbaL2Wi7Y_SdvjTm8t1HKSKkLJuxNHpYutgPOwjCnk2TKqt8KbIIWrVLt4xohHEb_mAUkEKu3dniRZbRrkXryK9nx8YyVD7EnITtepcH4RXFVCdBTA=w1280" alt="Essai dureté"></div>
+  </div>
+  <div class="photo-grid cols2">
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUCKcxjGCfrdEEbo4jb_ktrxEcoIOzY3iIFcMYxs9Hk5GlhBCC6FhkT3iuBc9eQgNK7zLafiOQLq264uoThVMkKEg-pkNNJDcNm1rISwv-UoY6Fh9D1wkYnQZYXA6CFtvCqx_RqudktAxvNZy4_JrqnaKpsMv1eXNpDPQ9krFo5Dbq7JyZqjtc_B9rzHaH4OEgEOpyffs4LCw1RZTmhYMQY_FNEGjO5nRvrp9a9PJzw=w1280" alt="Essai dureté 2"></div>
+    <div><img src="https://lh3.googleusercontent.com/sitesv/AA5AbUCUparj-X8kjKE413w_Y4dhW0tKQCgtJXTW8TB-7YQEeu9GhT1hJAXZkFlc0Rf5rnFcRKNy1BvGJmRdcC-A99vu4oX5Ne72jwazqjAW1atJh0N2DSw_X8kW_XV4lfHFZkIle444S4GyZFwy9kArjVidaNd4xCA6jjtjT0CzJLUyi1FZvlIWLwLfq9W9T_qDXV9pDuK5uvLkDn1SwAJQ-zuDBG9xD_u3mxhD=w1280" alt="Essai traction"></div>
+  </div>
+  <div class="cb">
+    <h2>Essais de résilience</h2>
+    <p>Un essai de résilience mesure la ténacité d'un matériau — sa capacité à absorber de l'énergie avant de se rompre lors d'un choc. Il donne une indication sur la fragilité ou la ductilité du matériau à différentes températures. Utile pour les pièces soumises à des impacts (châssis, pièces de sécurité).</p>
+    <h2>Essais de dureté</h2>
+    <p>L'essai de dureté évalue la résistance d'un matériau à la pénétration d'un corps dur. On applique une force définie avec un pénétrateur (bille, cône ou pyramide) puis on mesure l'empreinte laissée. Utilisé pour contrôler la qualité des pièces mécaniques et des revêtements.</p>
+    <h2>Essais de traction</h2>
+    <p>L'essai de traction évalue le comportement d'un matériau soumis à une force d'étirement. Il détermine les propriétés mécaniques fondamentales : résistance, élasticité et ductilité. Essentiel pour valider la conformité d'un matériau à une utilisation structurelle.</p>
+  </div>
+</div>
+
+<!-- SAE 1.3 -->
+<div id="sae13" class="page">
+  <div class="bc">Accueil <span>›</span> Spécifier <span>›</span> <span>SAE 1.3</span></div>
+  <div class="page-title">SAE 1.3 — Spécifier</div>
+  <div class="page-sub">Analyse et spécification d'un besoin industriel</div>
+  <div class="cb">
+    <h2>Présentation</h2>
+    <p>Cette SAE développe la compétence "Spécifier" en situation industrielle réelle : analyse du besoin client, rédaction d'un cahier des charges fonctionnel et modélisation du système étudié.</p>
+  </div>
+</div>
+
+<!-- SAE 2.3 -->
+<div id="sae23" class="page">
+  <div class="bc">Accueil <span>›</span> Développer <span>›</span> <span>SAE 2.3</span></div>
+  <div class="page-title">SAE 2.3 — Développer</div>
+  <div class="page-sub">Conception du Monster Truck — Solutions techniques</div>
+  <div class="cb">
+    <h2>Présentation</h2>
+    <p>La SAE 2.3 s'inscrit dans le projet Monster Truck BUT2 GMP. Elle couvre le développement des solutions techniques : choix de l'architecture, modélisation CAO, sélection des matériaux et dimensionnement électrique.</p>
+    <ul>
+      <li>Architecture 4 roues avec suspension à lames indépendantes</li>
+      <li>Transmission par chaîne — rapport 6 (pignon 10 dts / couronne 60 dts)</li>
+      <li>Modélisation complète SolidWorks — plan d'ensemble 22 pièces</li>
+      <li>Sélection matériaux via Granta EduPack (Acier S235, PLA, Plexiglass)</li>
+      <li>Dimensionnement électrique (batterie LiPo, moteur, protections)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SAE 2.1 -->
+<div id="sae21" class="page">
+  <div class="bc">Accueil <span>›</span> Développer <span>›</span> <span>SAE 2.1</span></div>
+  <div class="page-title">SAE 2.1 — Développer</div>
+  <div class="page-sub">Développement en situation industrielle</div>
+  <div class="cb">
+    <h2>Présentation</h2>
+    <p>Cette SAE porte sur le développement de solutions en situation industrielle réelle, en lien avec mon alternance chez Comrod France. Elle mobilise les compétences acquises en CAO, en analyse fonctionnelle et en conception mécanique.</p>
+  </div>
+</div>
+
+<!-- RÉALISER -->
+<div id="realiser" class="page">
+  <div class="bc">Accueil <span>›</span> <span>Réaliser</span></div>
+  <div class="page-title">Réaliser</div>
+  <div class="page-sub">Concrétiser une solution complexe en collaboration</div>
+  <div class="cb">
+    <h2>En alternance — Comrod France</h2>
+    <ul>
+      <li>Découpe de profilés pour le bâti test</li>
+      <li>Rédaction de plans de fabrication SolidWorks</li>
+      <li>Suivi de fabrication externalisée (douille mollette aluminium)</li>
+      <li>Assemblage et réglage des outillages produits</li>
+    </ul>
+    <h2>SAÉ Monster Truck — Fabrication</h2>
+    <ul>
+      <li>Découpe plasma des bras acier S235</li>
+      <li>Impression 3D du châssis et pignon (231 cm³)</li>
+      <li>Assemblage mécanique complet (train avant, arrière, transmission)</li>
+      <li>Câblage et mise en service électrique</li>
+    </ul>
+  </div>
+</div>
+
+<!-- C4 -->
+<div id="c4" class="page">
+  <div class="bc">Accueil <span>›</span> <span>C4 — Exploiter</span></div>
+  <div class="page-title">C4 — Exploiter</div>
+  <div class="page-sub">Utiliser les outils d'évaluation des performances</div>
+  <div class="cb">
+    <h2>Outils et méthodes utilisés</h2>
+    <ul>
+      <li>Granta EduPack — sélection et comparaison des matériaux</li>
+      <li>Calcul de coûts — analyse du budget Monster Truck (520,13 €)</li>
+      <li>Essais de validation électrique — multimètre, vérification courants/tensions</li>
+      <li>TP SDM — mesures expérimentales (résilience, dureté, traction) et comparaison avec théorie</li>
+      <li>Analyse des performances de la piste Monster Truck</li>
+    </ul>
+  </div>
+</div>
+
+<!-- MT PRÉSENTATION -->
+<div id="mt-pres" class="page">
+  <div class="bc">Accueil <span>›</span> Monster Truck <span>›</span> <span>Présentation</span></div>
+  <div class="page-title">Monster Truck — Présentation</div>
+  <div class="page-sub">SAÉ BUT2 GMP · Groupe FA2CAI3 · Deudon · Delplanche · Cariou · Kumps</div>
+  <div class="photo-wrap">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUBb6ERaDogVqwOzTSUD5zRJf8uJUTSK898eafPwqMXBh2odWGCQD35SG10BJlG4IEIQS-H-z_powb7-n7ZD7Y2LeCqJF6SKOmbmT1_eAzYFj_8V6x_b8UiUtaAkhSTakihDpums8dFcIiVfcG_E5KkAKiBd1p9gfBuwKA03mi8tSXSxsF5oNvQUlXI=w1280" alt="Monster Truck FA2CAI3">
+    <p class="photo-cap">Monster Truck autonome FA2CAI3 — vue CAO SolidWorks</p>
+  </div>
+  <div class="sr">
+    <div class="stat"><div class="stat-v">4 kg</div><div class="stat-l">Masse max</div></div>
+    <div class="stat"><div class="stat-v">520 €</div><div class="stat-l">Coût total</div></div>
+    <div class="stat"><div class="stat-v">22</div><div class="stat-l">Composants</div></div>
+    <div class="stat"><div class="stat-v">×6</div><div class="stat-l">Rapport transmission</div></div>
+  </div>
+  <div class="cb">
+    <h2>Contexte</h2>
+    <p>Dans le cadre de la SAÉ de tronc commun BUT2 GMP, notre groupe FA2CAI3 a conçu et fabriqué un monster truck autonome. Le projet couvre l'intégralité du cycle de vie : analyse du besoin, conception CAO, fabrication et mise en service pour la course finale.</p>
+    <h2>Spécifications techniques</h2>
+    <table class="tbl">
+      <tr><td>Châssis</td><td>Impression 3D — PLA</td></tr>
+      <tr><td>Bras avant / arrière</td><td>Acier S235 — découpe plasma</td></tr>
+      <tr><td>Axes</td><td>Acier S235 — Ø8 × 273 mm</td></tr>
+      <tr><td>Roues avant / arrière</td><td>MT Black Ø90 mm × 2 / Trotinettes Ø120 mm × 2</td></tr>
+      <tr><td>Transmission</td><td>Chaîne — pignon 10 dts / couronne 60 dts</td></tr>
+      <tr><td>Suspension</td><td>À lames × 4</td></tr>
+      <tr><td>Batterie / Moteur</td><td>LiPo 109,75 € / Électrique 32,91 €</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- MT CONCEPTION -->
+<div id="mt-conce" class="page">
+  <div class="bc">Accueil <span>›</span> Monster Truck <span>›</span> <span>Conception</span></div>
+  <div class="page-title">Monster Truck — Conception</div>
+  <div class="page-sub">5 étapes de la démarche de conception</div>
+  <div class="steps">
+    <div class="step"><div class="sn b">1</div><div><div class="step-title">Analyse du cahier des charges</div><div class="step-desc">Masse max 4 kg, budget limité, piste avec obstacles. État de l'art, analyse technique de la piste, diagramme de Gantt (janvier–mars 2026).</div></div></div>
+    <div class="step"><div class="sn b">2</div><div><div class="step-title">Choix des solutions constructives</div><div class="step-desc">Architecture 4 roues, suspension à lames, chaîne rapport ×6 (pignon 10 / couronne 60 dts), motorisation électrique LiPo. Acier S235 pour les pièces structurelles, PLA pour les pièces imprimées.</div></div></div>
+    <div class="step"><div class="sn b">3</div><div><div class="step-title">Modélisation CAO — SolidWorks</div><div class="step-desc">Assemblage complet — 22 composants. Plan d'ensemble A3 échelle 1:5 avec nomenclature. Export DXF pour plasma et laser.</div></div></div>
+    <div class="step"><div class="sn b">4</div><div><div class="step-title">Analyse matériaux — Granta EduPack</div><div class="step-desc">Acier S235 (bras, axes), PLA (châssis, pignon), Plexiglass (couronne). Sélection justifiée par résistance mécanique, masse et formabilité.</div></div></div>
+    <div class="step"><div class="sn b">5</div><div><div class="step-title">Dimensionnement électrique</div><div class="step-desc">Batterie LiPo (109,75 €), moteur (32,91 €), interrupteur, arrêt d'urgence automatique. Vérification courants, tensions, protections. Schéma de câblage.</div></div></div>
+  </div>
+</div>
+
+<!-- MT FABRICATION -->
+<div id="mt-fab" class="page">
+  <div class="bc">Accueil <span>›</span> Monster Truck <span>›</span> <span>Fabrication</span></div>
+  <div class="page-title">Monster Truck — Fabrication</div>
+  <div class="page-sub">Procédés, budget et étapes d'assemblage</div>
+  <div class="cb">
+    <h2>Budget</h2>
+    <table class="tbl">
+      <tr><th>Poste</th><th>Montant</th><th>%</th></tr>
+      <tr><td>Matières premières (Acier S235)</td><td>2,12 €</td><td>0,4 %</td></tr>
+      <tr><td>Composants achetés</td><td>334,76 €</td><td>64,4 %</td></tr>
+      <tr><td>Coûts machines</td><td>183,25 €</td><td>35,2 %</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>520,13 €</strong></td><td><strong>100 %</strong></td></tr>
+    </table>
+    <h2>Procédés</h2>
+    <table class="tbl">
+      <tr><th>Procédé</th><th>Application</th><th>Coût</th></tr>
+      <tr><td>Scie mécanique</td><td>Débit bruts acier (axes, plaques) — 1h</td><td>59,50 €</td></tr>
+      <tr><td>Découpe plasma</td><td>Bras avant et arrière Acier S235 — 15 min/bras</td><td>55,00 €</td></tr>
+      <tr><td>Découpe laser</td><td>Support arrêt d'urgence — 10 min</td><td>11,00 €</td></tr>
+      <tr><td>Impression 3D</td><td>Châssis + pignon PLA — 231 cm³</td><td>57,75 €</td></tr>
+    </table>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="sn g">1</div><div><div class="step-title">Débit des bruts</div><div class="step-desc">Scie mécanique — axes Ø8 et plaques acier. Contrôle dimensionnel par rapport aux plans SolidWorks.</div></div></div>
+    <div class="step"><div class="sn g">2</div><div><div class="step-title">Découpe plasma des bras</div><div class="step-desc">Bras avant (180×30×5) et arrière (120×20×5) depuis fichiers DXF. Ébavurage et ajustement.</div></div></div>
+    <div class="step"><div class="sn g">3</div><div><div class="step-title">Découpe laser</div><div class="step-desc">Support arrêt d'urgence automatique en 10 min. Précision laser garantissant le bon fonctionnement.</div></div></div>
+    <div class="step"><div class="sn g">4</div><div><div class="step-title">Impression 3D</div><div class="step-desc">Châssis + pignon PLA (231 cm³). Contrôle planéité et tolérances. Vérification engagement pignon/couronne.</div></div></div>
+    <div class="step"><div class="sn g">5</div><div><div class="step-title">Assemblage mécanique</div><div class="step-desc">Train avant (bras, axe, roulements 608ZZ, roues Ø90), train arrière (bras, axe, roues Ø120, moyeux), chaîne, 4 suspensions à lames.</div></div></div>
+    <div class="step"><div class="sn g">6</div><div><div class="step-title">Câblage et mise en service</div><div class="step-desc">Raccordement batterie → moteur via interrupteur et arrêt d'urgence. Vérification au multimètre. Mise sous tension progressive.</div></div></div>
+  </div>
+</div>
+
+<!-- MT COURSE -->
+<div id="mt-course" class="page">
+  <div class="bc">Accueil <span>›</span> Monster Truck <span>›</span> <span>La course</span></div>
+  <div class="page-title">Monster Truck — La course</div>
+  <div class="page-sub">Monster Truck Challenge · Piste SAÉ 2025–2026</div>
+  <div class="cb" style="padding:0;overflow:hidden">
+    <div class="track-item"><div class="track-ico tb">🏁</div><div><div class="track-name">Portique de départ</div><div class="track-desc">Lancement autonome au signal. Validation de la hauteur maximale du véhicule.</div></div></div>
+    <div class="track-item"><div class="track-ico ta">↕</div><div><div class="track-name">Pas japonais (×12)</div><div class="track-desc">12 obstacles espacés sur 2 100 mm — teste garde au sol, rigidité châssis et suspension à lames.</div></div></div>
+    <div class="track-item"><div class="track-ico tg">↗</div><div><div class="track-name">Rampe de montée</div><div class="track-desc">Inclinaison à gravir — teste le rapport ×6 et la puissance moteur.</div></div></div>
+    <div class="track-item"><div class="track-ico ta">🎯</div><div><div class="track-name">Portique bonus 1 — Basculeur long</div><div class="track-desc">5 cibles à déclencher — 2 basculeurs longs, 2 courts, 1 axe pivot. Points bonus.</div></div></div>
+    <div class="track-item"><div class="track-ico ta">🎯</div><div><div class="track-name">Portique bonus 2 — Basculeur court</div><div class="track-desc">5 cibles supplémentaires. Amplitude de rotation réduite.</div></div></div>
+    <div class="track-item"><div class="track-ico tg">↗</div><div><div class="track-name">Rampe tremplin</div><div class="track-desc">Saut — atterrissage absorbé par les suspensions à lames.</div></div></div>
+    <div class="track-item"><div class="track-ico tg">🌿</div><div><div class="track-name">Prairie</div><div class="track-desc">Revêtement souple — adhérence des roues Ø90 et Ø120 sur terrain irrégulier.</div></div></div>
+    <div class="track-item"><div class="track-ico tb">🏆</div><div><div class="track-name">Portique d'arrivée + Bumper</div><div class="track-desc">Franchissement final. Relevé du temps et des points bonus pour le classement.</div></div></div>
+  </div>
+  <div class="score-row" style="margin-top:1rem">
+    <div class="score-box"><div class="score-n" style="color:#185FA5">8</div><div class="score-l">Mise en service</div></div>
+    <div class="score-box"><div class="score-n" style="color:#1D9E75">6</div><div class="score-l">Assemblage / montage</div></div>
+    <div class="score-box"><div class="score-n" style="color:#BA7517">6</div><div class="score-l">Essais de validation</div></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+function go(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nl').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el)el.classList.add('on');
+  if(btn){btn.classList.add('active')}
+  else{document.querySelectorAll('.nl').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active')})}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
